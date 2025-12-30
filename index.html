@@ -23,6 +23,7 @@
             --text-gray: #64748b;
             --text-light: #94a3b8;
             --border: #e2e8f0;
+            --text-secondary: #475569; /* Added for About Section text */
         }
 
         html {
@@ -162,20 +163,22 @@
             align-items: center;
             justify-content: center;
             padding: 8rem 2rem 4rem;
-            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+            /* Unified background - removed gradient for consistency */
+            background: #f8fafc;
             position: relative;
             overflow: hidden;
         }
 
+        /* Removed the two-tone background effect */
         /* Enhanced background with animated gradient */
         .hero::before {
             content: '';
             position: absolute;
             top: 0;
             right: 0;
-            width: 50%;
+            width: 100%; /* Changed from 50% */
             height: 100%;
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(59, 130, 246, 0.03) 50%, transparent 100%);
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.02) 0%, rgba(59, 130, 246, 0.01) 50%, transparent 100%); /* Adjusted opacity */
             z-index: 0;
             animation: gradientShift 8s ease infinite;
         }
@@ -268,19 +271,10 @@
             }
         }
 
-        /* Enhanced image hover effect with 3D tilt */
         .hero-image img {
             width: 100%;
             max-width: 500px;
             height: auto;
-            border-radius: 8px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .hero-image img:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 35px 60px -12px rgba(37, 99, 235, 0.3);
         }
 
         .hero-greeting {
@@ -492,97 +486,77 @@
         .about-container {
             max-width: 1200px;
             margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
+            /* Changed to single column layout since we're removing the image */
+            display: block;
         }
 
-        /* Added scroll reveal and enhanced image hover */
-        .about-image {
-            width: 100%;
-            height: 500px;
-            border-radius: 8px;
-            overflow: hidden;
-            position: relative;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
-            opacity: 0;
-            transform: translateX(-50px);
-            transition: all 0.8s ease;
-        }
-
-        .about-image.reveal {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .about-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .about-image:hover img {
-            transform: scale(1.1);
-        }
-
-        .about-image::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, transparent 50%);
-            z-index: 1;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-
-        .about-image:hover::before {
-            opacity: 1;
-        }
+        /* Removed about-image styles since we're removing the second photo */
 
         /* Added reveal animation for about content */
         .about-content {
+            max-width: 800px; /* Centered content */
+            margin: 0 auto;
+            text-align: center; /* Centered text */
             opacity: 0;
-            transform: translateX(50px);
+            transform: translateY(30px);
             transition: all 0.8s ease;
         }
 
         .about-content.reveal {
             opacity: 1;
-            transform: translateX(0);
-        }
-
-        .section-label {
-            font-size: 0.875rem;
-            color: var(--primary);
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 1rem;
-        }
-
-        .section-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            font-weight: 800;
-            color: var(--text-dark);
-            margin-bottom: 2rem;
-            line-height: 1.2;
+            transform: translateY(0);
         }
 
         .about-text {
-            color: var(--text-gray);
+            font-size: 1.125rem; /* Slightly larger font */
+            color: var(--text-secondary); /* Using new secondary text color */
             line-height: 1.8;
-            margin-bottom: 1.5rem;
+            margin-bottom: 2rem; /* Adjusted margin */
         }
 
-        .skills-list {
+        /* Added skills grid to replace the image section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .skill-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .skill-item.reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .skill-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(37, 99, 235, 0.15);
+        }
+
+        .skill-item i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .skill-item span {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .skills-list { /* Kept original but will be hidden by skills-grid */
             list-style: none;
             margin-bottom: 2rem;
         }
@@ -1054,8 +1028,8 @@
                 </a>
             </div>
             <ul class="nav-links">
-                <li><a href="#services" class="active">Services</a></li>
-                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#about" class="active">About</a></li>
                 <li><a href="#experience">Experience</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#contact">Contact</a></li>
@@ -1085,7 +1059,8 @@
                 </div>
 
                 <div class="social-links">
-                    <a href="https://www.linkedin.com/in/thilak-l" target="_blank" aria-label="LinkedIn">
+                    <!-- Updated LinkedIn URL -->
+                    <a href="https://www.linkedin.com/in/thilak0105" target="_blank" aria-label="LinkedIn">
                         <i class="fab fa-linkedin-in"></i>
                     </a>
                     <a href="https://github.com/Thilak0105" target="_blank" aria-label="GitHub">
@@ -1165,10 +1140,7 @@
     <!-- About Section -->
     <section id="about" class="about">
         <div class="about-container">
-            <div class="about-image">
-                <!-- Keeping original image path intact -->
-                <img src="public/images/IMG_1693-removebg-preview.png" alt="Thilak - Data Science Specialist">
-            </div>
+            <!-- Removed the second photo and replaced with skills showcase -->
             
             <div class="about-content">
                 <div class="section-label">About Me</div>
@@ -1179,28 +1151,35 @@
                 </p>
 
                 <p class="about-text">
-                    I'm good at:
-                </p>
-                
-                <ul class="skills-list">
-                    <li>Machine Learning & Deep Learning</li>
-                    <li>Time-Series Forecasting & Optimization</li>
-                    <li>Natural Language Processing</li>
-                    <li>Cybersecurity & Malware Analysis</li>
-                    <li>Full-Stack Web Development</li>
-                </ul>
-
-                <p class="about-text">
-                    I specialize in developing AI-powered solutions, from oil price forecasting pipelines to Android malware detection systems. I also build educational assistive technologies and contribute to full-stack development projects. If you like what I do, contact me to discuss our next great project!
+                    With hands-on experience in AI research, mobile application development, and data analytics, I bring a unique blend of technical expertise and problem-solving skills to every project. My work spans from developing advanced machine learning models to creating user-centric Android applications.
                 </p>
 
-                <div class="hero-buttons">
-                    <a href="#projects" class="btn btn-primary">
-                        View Portfolio
-                    </a>
-                    <a href="/resume.pdf" class="btn btn-secondary" download>
-                        Download CV
-                    </a>
+                <!-- Added skills grid instead of duplicate photo -->
+                <div class="skills-grid">
+                    <div class="skill-item">
+                        <i class="fas fa-brain"></i>
+                        <span>Machine Learning</span>
+                    </div>
+                    <div class="skill-item">
+                        <i class="fas fa-robot"></i>
+                        <span>Deep Learning</span>
+                    </div>
+                    <div class="skill-item">
+                        <i class="fas fa-mobile-alt"></i>
+                        <span>Android Dev</span>
+                    </div>
+                    <div class="skill-item">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Data Analytics</span>
+                    </div>
+                    <div class="skill-item">
+                        <i class="fas fa-code"></i>
+                        <span>Python</span>
+                    </div>
+                    <div class="skill-item">
+                        <i class="fab fa-java"></i>
+                        <span>Java</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1218,7 +1197,8 @@
                     <div class="timeline-content">
                         <h3>Integrated M.Sc. Data Science</h3>
                         <span class="timeline-date">June 2022 - June 2027</span>
-                        <p>Pursuing Integrated M.Sc. in Data Science at Amrita Vishwa Vidyapeetham, Coimbatore with a CGPA of 8.05/10. Coursework includes Deep Learning, NLP, Big Data, Computer Networks, Machine Learning, and Reinforcement Learning.</p>
+                        <!-- Updated CGPA to 8.13 -->
+                        <p>Pursuing Integrated M.Sc. in Data Science at Amrita Vishwa Vidyapeetham, Coimbatore with a CGPA of 8.13/10. Coursework includes Deep Learning, NLP, Big Data, Computer Networks, Machine Learning, and Reinforcement Learning.</p>
                     </div>
                 </div>
 
@@ -1410,6 +1390,7 @@
             const aboutImage = document.querySelector('.about-image');
             const aboutContent = document.querySelector('.about-content');
             const skillsList = document.querySelector('.skills-list');
+            const skillItems = document.querySelectorAll('.skill-item'); /* Get skill items */
 
             serviceCards.forEach((card, index) => {
                 card.style.transitionDelay = `${index * 0.1}s`;
@@ -1431,9 +1412,15 @@
                 observer.observe(method);
             });
 
+            /* Observe skill items with staggered delay */
+            skillItems.forEach((item, index) => {
+                item.style.transitionDelay = `${index * 0.1}s`;
+                observer.observe(item);
+            });
+
             if (aboutImage) observer.observe(aboutImage);
             if (aboutContent) observer.observe(aboutContent);
-            if (skillsList) observer.observe(skillsList);
+            if (skillsList) observer.observe(skillsList); /* Keep observing skills-list if needed for other purposes */
         });
 
         // Smooth scroll for navigation links
