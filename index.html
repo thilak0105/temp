@@ -36,6 +36,17 @@
             background-color: var(--bg-light);
         }
 
+        /* Added scroll progress bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            z-index: 10000;
+            transition: width 0.1s ease;
+        }
+
         /* Navigation */
         nav {
             position: fixed;
@@ -63,6 +74,13 @@
             color: var(--text-dark);
             text-decoration: none;
             letter-spacing: -0.02em;
+            /* Added logo hover animation */
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            color: var(--primary);
+            transform: scale(1.05);
         }
 
         .contact-info {
@@ -83,6 +101,12 @@
 
         .contact-item:hover {
             color: var(--primary);
+        }
+
+        /* Added icon rotation on hover */
+        .contact-item:hover i {
+            transform: scale(1.2);
+            transition: transform 0.3s ease;
         }
 
         .nav-links {
@@ -106,7 +130,8 @@
             width: 0;
             height: 2px;
             bottom: -5px;
-            left: 0;
+            left: 50%;
+            transform: translateX(-50%);
             background: var(--primary);
             transition: width 0.3s ease;
         }
@@ -137,11 +162,12 @@
             align-items: center;
             justify-content: center;
             padding: 8rem 2rem 4rem;
-            background: #ffffff;
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
             position: relative;
             overflow: hidden;
         }
 
+        /* Enhanced background with animated gradient */
         .hero::before {
             content: '';
             position: absolute;
@@ -149,8 +175,35 @@
             right: 0;
             width: 50%;
             height: 100%;
-            background: transparent;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(59, 130, 246, 0.03) 50%, transparent 100%);
             z-index: 0;
+            animation: gradientShift 8s ease infinite;
+        }
+
+        /* Added floating particles animation */
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(37, 99, 235, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(37, 99, 235, 0.03) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { opacity: 1; transform: translateX(0); }
+            50% { opacity: 0.8; transform: translateX(-20px); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-20px) scale(1.05); }
         }
 
         .hero-content {
@@ -168,24 +221,66 @@
             max-width: 600px;
         }
 
+        /* Added stagger animation for hero text elements */
+        .hero-text > * {
+            opacity: 0;
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .hero-greeting {
+            animation-delay: 0.2s;
+        }
+
+        .hero-title {
+            animation-delay: 0.4s;
+        }
+
+        .hero-subtitle {
+            animation-delay: 0.6s;
+        }
+
+        .hero-buttons {
+            animation-delay: 0.8s;
+        }
+
+        .social-links {
+            animation-delay: 1s;
+        }
+
         .hero-image {
             position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: transparent;
+            /* Added slide in animation */
+            opacity: 0;
+            animation: slideInRight 1s ease-out 0.5s forwards;
         }
 
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Enhanced image hover effect with 3D tilt */
         .hero-image img {
             width: 100%;
             max-width: 500px;
             height: auto;
-            box-shadow: none;
-            transition: all 0.4s ease;
-            background: transparent;
+            border-radius: 8px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .hero-image img:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 35px 60px -12px rgba(37, 99, 235, 0.3);
         }
 
         .hero-greeting {
@@ -218,16 +313,37 @@
             margin-bottom: 3rem;
         }
 
+        /* Enhanced button hover effects with ripple */
         .btn {
             padding: 1rem 2rem;
             border-radius: 4px;
             text-decoration: none;
             font-weight: 600;
             font-size: 0.9375rem;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
         }
 
         .btn-primary {
@@ -240,6 +356,7 @@
             background: var(--primary-dark);
             border-color: var(--primary-dark);
             transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
         }
 
         .btn-secondary {
@@ -252,6 +369,16 @@
             background: var(--primary);
             color: white;
             transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+        }
+
+        /* Added icon animation in buttons */
+        .btn i {
+            transition: transform 0.3s ease;
+        }
+
+        .btn:hover i {
+            transform: translateX(5px);
         }
 
         .social-links {
@@ -259,6 +386,7 @@
             gap: 1rem;
         }
 
+        /* Enhanced social link hover with rotation */
         .social-links a {
             width: 45px;
             height: 45px;
@@ -268,14 +396,15 @@
             align-items: center;
             justify-content: center;
             color: var(--text-gray);
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             font-size: 1.125rem;
         }
 
         .social-links a:hover {
             background: var(--primary);
             color: white;
-            transform: translateY(-3px);
+            transform: translateY(-5px) rotate(360deg);
+            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
         }
 
         /* Services Section */
@@ -296,19 +425,29 @@
             margin-top: 3rem;
         }
 
+        /* Added scroll reveal animation and enhanced hover */
         .service-card {
             padding: 2.5rem;
             background: white;
             border: 1px solid var(--border);
             border-radius: 8px;
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .service-card.reveal {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .service-card:hover {
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(37, 99, 235, 0.15);
+            transform: translateY(-10px);
+            border-color: var(--primary);
         }
 
+        /* Added icon rotation on card hover */
         .service-icon {
             width: 60px;
             height: 60px;
@@ -320,6 +459,11 @@
             color: white;
             font-size: 1.5rem;
             margin-bottom: 1.5rem;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .service-card:hover .service-icon {
+            transform: rotateY(360deg) scale(1.1);
         }
 
         .service-title {
@@ -327,6 +471,11 @@
             font-weight: 700;
             color: var(--text-dark);
             margin-bottom: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .service-card:hover .service-title {
+            color: var(--primary);
         }
 
         .service-description {
@@ -349,6 +498,7 @@
             align-items: center;
         }
 
+        /* Added scroll reveal and enhanced image hover */
         .about-image {
             width: 100%;
             height: 500px;
@@ -356,6 +506,14 @@
             overflow: hidden;
             position: relative;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s ease;
+        }
+
+        .about-image.reveal {
+            opacity: 1;
+            transform: translateX(0);
         }
 
         .about-image img {
@@ -363,11 +521,11 @@
             height: 100%;
             object-fit: cover;
             object-position: center;
-            transition: transform 0.5s ease;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .about-image:hover img {
-            transform: scale(1.05);
+            transform: scale(1.1);
         }
 
         .about-image::before {
@@ -380,6 +538,24 @@
             background: linear-gradient(135deg, rgba(37, 99, 235, 0.1) 0%, transparent 50%);
             z-index: 1;
             pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .about-image:hover::before {
+            opacity: 1;
+        }
+
+        /* Added reveal animation for about content */
+        .about-content {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s ease;
+        }
+
+        .about-content.reveal {
+            opacity: 1;
+            transform: translateX(0);
         }
 
         .section-label {
@@ -411,12 +587,27 @@
             margin-bottom: 2rem;
         }
 
+        /* Added stagger animation for skills */
         .skills-list li {
             padding: 0.5rem 0;
             color: var(--text-gray);
             position: relative;
             padding-left: 1.5rem;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.3s ease;
         }
+
+        .skills-list.reveal li {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .skills-list.reveal li:nth-child(1) { transition-delay: 0.1s; }
+        .skills-list.reveal li:nth-child(2) { transition-delay: 0.2s; }
+        .skills-list.reveal li:nth-child(3) { transition-delay: 0.3s; }
+        .skills-list.reveal li:nth-child(4) { transition-delay: 0.4s; }
+        .skills-list.reveal li:nth-child(5) { transition-delay: 0.5s; }
 
         .skills-list li::before {
             content: '→';
@@ -441,6 +632,7 @@
             margin-top: 3rem;
         }
 
+        /* Added scroll reveal and enhanced hover */
         .timeline-item {
             display: grid;
             grid-template-columns: 120px 1fr;
@@ -448,16 +640,33 @@
             margin-bottom: 3rem;
             padding-bottom: 3rem;
             border-bottom: 1px solid var(--border);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .timeline-item.reveal {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .timeline-item:last-child {
             border-bottom: none;
         }
 
+        .timeline-item:hover {
+            transform: translateX(10px);
+        }
+
         .timeline-number {
             font-size: 0.875rem;
             color: var(--text-light);
             font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .timeline-item:hover .timeline-number {
+            color: var(--primary);
         }
 
         .timeline-content h3 {
@@ -465,6 +674,11 @@
             font-weight: 700;
             color: var(--text-dark);
             margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .timeline-item:hover .timeline-content h3 {
+            color: var(--primary);
         }
 
         .timeline-content .timeline-date {
@@ -497,19 +711,28 @@
             margin-top: 3rem;
         }
 
+        /* Enhanced project card with 3D hover effect */
         .project-card {
             background: white;
             border-radius: 8px;
             overflow: hidden;
             border: 1px solid var(--border);
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .project-card.reveal {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .project-card:hover {
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-            transform: translateY(-10px);
+            box-shadow: 0 30px 70px rgba(37, 99, 235, 0.2);
+            transform: translateY(-15px) scale(1.02);
         }
 
+        /* Added gradient animation on project image */
         .project-image {
             width: 100%;
             height: 250px;
@@ -519,6 +742,39 @@
             justify-content: center;
             color: white;
             font-size: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-image::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(255, 255, 255, 0.1) 50%,
+                transparent 70%
+            );
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .project-image i {
+            position: relative;
+            z-index: 1;
+            transition: transform 0.4s ease;
+        }
+
+        .project-card:hover .project-image i {
+            transform: scale(1.2) rotate(10deg);
         }
 
         .project-content {
@@ -539,6 +795,11 @@
             font-weight: 700;
             color: var(--text-dark);
             margin-bottom: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .project-card:hover .project-title {
+            color: var(--primary);
         }
 
         .project-description {
@@ -553,6 +814,7 @@
             gap: 0.5rem;
         }
 
+        /* Added hover effect on tech tags */
         .tech-tag {
             padding: 0.25rem 0.75rem;
             background: var(--bg-gray);
@@ -560,6 +822,14 @@
             border-radius: 20px;
             font-size: 0.75rem;
             font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .tech-tag:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
         }
 
         /* Contact Section */
@@ -581,8 +851,24 @@
             margin-top: 3rem;
         }
 
+        /* Added reveal and hover effect for contact methods */
         .contact-method {
             text-align: left;
+            padding: 2rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .contact-method.reveal {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .contact-method:hover {
+            background: var(--bg-gray);
+            transform: translateY(-5px);
         }
 
         .contact-method-label {
@@ -612,6 +898,11 @@
         .contact-method i {
             color: var(--primary);
             margin-right: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .contact-method:hover i {
+            transform: scale(1.3) rotate(10deg);
         }
 
         /* Footer */
@@ -745,6 +1036,9 @@
     </style>
 </head>
 <body>
+    <!-- Added scroll progress bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
     <!-- Navigation -->
     <nav id="navbar">
         <div class="nav-container">
@@ -804,6 +1098,7 @@
             </div>
 
             <div class="hero-image">
+                <!-- Keeping original image path intact -->
                 <img src="public/images/IMG_1693-removebg-preview.png" alt="Thilak L - Data Science & AI Specialist">
             </div>
         </div>
@@ -870,6 +1165,11 @@
     <!-- About Section -->
     <section id="about" class="about">
         <div class="about-container">
+            <div class="about-image">
+                <!-- Keeping original image path intact -->
+                <img src="public/images/IMG_1693-removebg-preview.png" alt="Thilak - Data Science Specialist">
+            </div>
+            
             <div class="about-content">
                 <div class="section-label">About Me</div>
                 <h2 class="section-title">A Few Words<br>About Me</h2>
@@ -914,7 +1214,7 @@
             
             <div class="timeline-items">
                 <div class="timeline-item">
-                    <div class="timeline-number">01 \\ EDUCATION</div>
+                    <div class="timeline-number">01 \ EDUCATION</div>
                     <div class="timeline-content">
                         <h3>Integrated M.Sc. Data Science</h3>
                         <span class="timeline-date">June 2022 - June 2027</span>
@@ -923,7 +1223,7 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-number">02 \\ INTERNSHIP</div>
+                    <div class="timeline-number">02 \ INTERNSHIP</div>
                     <div class="timeline-content">
                         <h3>Research Intern at IIM Bodh Gaya</h3>
                         <span class="timeline-date">May 2025 - June 2025</span>
@@ -932,7 +1232,7 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-number">03 \\ DEVELOPMENT</div>
+                    <div class="timeline-number">03 \ DEVELOPMENT</div>
                     <div class="timeline-content">
                         <h3>AI/ML Development Intern at RBG AI</h3>
                         <span class="timeline-date">November 2024 - May 2025</span>
@@ -941,7 +1241,7 @@
                 </div>
 
                 <div class="timeline-item">
-                    <div class="timeline-number">04 \\ ACHIEVEMENTS</div>
+                    <div class="timeline-number">04 \ ACHIEVEMENTS</div>
                     <div class="timeline-content">
                         <h3>3rd Place - Code O Clock Hackathon</h3>
                         <span class="timeline-date">September 2025</span>
@@ -1080,6 +1380,62 @@
     </footer>
 
     <script>
+        window.addEventListener('scroll', () => {
+            const scrollProgress = document.getElementById('scrollProgress');
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = (scrollTop / docHeight) * 100;
+            scrollProgress.style.width = scrollPercent + '%';
+        });
+
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('reveal');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animatable elements
+        document.addEventListener('DOMContentLoaded', () => {
+            const serviceCards = document.querySelectorAll('.service-card');
+            const projectCards = document.querySelectorAll('.project-card');
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            const contactMethods = document.querySelectorAll('.contact-method');
+            const aboutImage = document.querySelector('.about-image');
+            const aboutContent = document.querySelector('.about-content');
+            const skillsList = document.querySelector('.skills-list');
+
+            serviceCards.forEach((card, index) => {
+                card.style.transitionDelay = `${index * 0.1}s`;
+                observer.observe(card);
+            });
+
+            projectCards.forEach((card, index) => {
+                card.style.transitionDelay = `${index * 0.15}s`;
+                observer.observe(card);
+            });
+
+            timelineItems.forEach((item, index) => {
+                item.style.transitionDelay = `${index * 0.1}s`;
+                observer.observe(item);
+            });
+
+            contactMethods.forEach((method, index) => {
+                method.style.transitionDelay = `${index * 0.1}s`;
+                observer.observe(method);
+            });
+
+            if (aboutImage) observer.observe(aboutImage);
+            if (aboutContent) observer.observe(aboutContent);
+            if (skillsList) observer.observe(skillsList);
+        });
+
         // Smooth scroll for navigation links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
